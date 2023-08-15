@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Store {
     @Id @GeneratedValue
     private Long id;
-    private String  placeId;
+    private String   placeId;
     private String name;
     private String address;
     private String phone;

@@ -26,7 +26,7 @@ public class StoreService {
 
         for (Object doc : documents) {
             JSONObject document = (JSONObject) doc;
-            String placeId = (String) document.get("id");
+            String  placeId = (String) document.get("id");
             String placeName = (String) document.get("place_name");
             String roadAddressName = (String) document.get("road_address_name");
             String phone = (String) document.get("phone");
@@ -34,7 +34,6 @@ public class StoreService {
             String placeUrl = (String) document.get("place_url");
             String x = (String) document.get("x");
             String y = (String) document.get("y");
-
             Store store = new Store(null, placeId, placeName, roadAddressName, phone, categoryGroupName, placeUrl, x, y);
             if (!repository.existsByPlaceId(store.getPlaceId())) {
                 repository.save(store);
