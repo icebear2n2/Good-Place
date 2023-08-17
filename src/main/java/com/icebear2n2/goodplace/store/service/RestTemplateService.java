@@ -27,9 +27,9 @@ public class RestTemplateService {
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
         URI url = URI.create(API_SERVER_HOST+SEARCH_PLACE_KEYWORD_PATH+queryString);
-        RequestEntity<String> rq = new RequestEntity<>(headers, HttpMethod.GET, url);
-        ResponseEntity<String> re = restTemplate.exchange(rq, String.class);
+        RequestEntity<String> req = new RequestEntity<>(headers, HttpMethod.GET, url);
+        ResponseEntity<String> res = restTemplate.exchange(req, String.class);
 
-        return re;
+        return res;
     }
 }

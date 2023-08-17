@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -45,4 +46,36 @@ public class StoreService {
         e.printStackTrace();
         }
     }
+
+    public void saveSelectedPlaces(String selectedPlacesData) {
+        JSONParser parser = new JSONParser();
+        try {
+            JSONArray selectedPlaces = (JSONArray) parser.parse(selectedPlacesData);
+            for (Object obj : selectedPlaces) {
+                JSONObject placeJson = (JSONObject) obj;
+
+                Store store = Store.builder()
+                        .placeId((String) placeJson.get("id"))
+                        .name((String) placeJson.get("place_name"))
+                        .address((String) placeJson.get("address_name"))
+                        .phone((String) placeJson.get("phone"))
+                        .foodType((String) placeJson.get("category_name"))
+                        .storeImgUrl((String) placeJson.get("place_url"))
+                        .coordinateX((String) placeJson.get("x"))
+                        .coordinateY((String) placeJson.get("y"))
+                        .build();
+
+                if (!repository.existsByPlaceId(store.getPlaceId())) {
+                    repository.save(store);
+                } else {
+                    System.out.println("Store with placeId " + store.getPlaceId() + " already exists.");
+                }
+            }
+        } catch (ParseException e) {
+            // Handle parsing error
+            e.printStackTrace();
+            throw new RuntimeException("Failed to parse selectedPlacesData");
+        }
+    }
+
 }
